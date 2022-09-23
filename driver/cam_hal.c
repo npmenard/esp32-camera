@@ -375,8 +375,8 @@ esp_err_t cam_config(const camera_config_t *config, framesize_t frame_size, uint
     cam_obj->psram_mode = (config->xclk_freq_hz == 16000000);
 #endif
     cam_obj->frame_cnt = config->fb_count;
-    cam_obj->width = resolution[frame_size].width;
-    cam_obj->height = resolution[frame_size].height;
+    cam_obj->width = cam_resolution[frame_size].width;
+    cam_obj->height = cam_resolution[frame_size].height;
 
     if(cam_obj->jpeg_mode){
         cam_obj->recv_size = cam_obj->width * cam_obj->height / 5;

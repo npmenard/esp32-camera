@@ -256,8 +256,8 @@ static int set_framesize(sensor_t *sensor, framesize_t framesize)
     if (framesize > FRAMESIZE_VGA) {
         return -1;
     }
-    uint16_t w = resolution[framesize].width;
-    uint16_t h = resolution[framesize].height;
+    uint16_t w = cam_resolution[framesize].width;
+    uint16_t h = cam_resolution[framesize].height;
     // uint8_t reg = SCCB_Read(sensor->slv_addr, COM7);
 
     sensor->status.framesize = framesize;

@@ -157,7 +157,7 @@ typedef struct {
 } resolution_info_t;
 
 // Resolution table (in sensor.c)
-extern const resolution_info_t resolution[];
+extern const resolution_info_t cam_resolution[];
 // camera sensor table (in sensor.c)
 extern const camera_sensor_info_t camera_sensor[];
 

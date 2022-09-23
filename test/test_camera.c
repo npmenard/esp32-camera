@@ -255,7 +255,7 @@ static void camera_performance_test(uint32_t xclk_freq, uint32_t pic_num)
 
     for (; format_s <= format_e; format_s++) {
         for (size_t i = 0; i <= max_size; i++) {
-            ESP_LOGI(TAG, "\n\n===> Testing format:%s resolution: %d x %d <===", get_cam_format_name(*format_s), resolution[i].width, resolution[i].height);
+            ESP_LOGI(TAG, "\n\n===> Testing format:%s resolution: %d x %d <===", get_cam_format_name(*format_s), cam_resolution[i].width, cam_resolution[i].height);
             ret = init_camera(xclk_freq, *format_s, i, 2, SIOD_GPIO_NUM, -1);
             vTaskDelay(100 / portTICK_RATE_MS);
             if (ESP_OK != ret) {
@@ -272,7 +272,7 @@ static void camera_performance_test(uint32_t xclk_freq, uint32_t pic_num)
     printf("resolution  ,  JPEG fps,  JPEG size, RGB565 fps, RGB565 size, YUV422 fps, YUV422 size \n");
     for (size_t i = 0; i <= max_size; i++) {
         printf("%4d x %4d ,     %5.2f,     %6d,      %5.2f,     %7d,      %5.2f,     %7d \n",
-               resolution[i].width, resolution[i].height,
+               cam_resolution[i].width, cam_resolution[i].height,
                results[0].fps[i], results[0].size[i],
                results[1].fps[i], results[1].size[i],
                results[2].fps[i], results[2].size[i]);

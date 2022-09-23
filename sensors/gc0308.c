@@ -181,10 +181,10 @@ static int set_framesize(sensor_t *sensor, framesize_t framesize)
         framesize = FRAMESIZE_VGA;
     }
     sensor->status.framesize = framesize;
-    uint16_t w = resolution[framesize].width;
-    uint16_t h = resolution[framesize].height;
-    uint16_t row_s = (resolution[FRAMESIZE_VGA].height - h) / 2;
-    uint16_t col_s = (resolution[FRAMESIZE_VGA].width - w) / 2;
+    uint16_t w = cam_resolution[framesize].width;
+    uint16_t h = cam_resolution[framesize].height;
+    uint16_t row_s = (cam_resolution[FRAMESIZE_VGA].height - h) / 2;
+    uint16_t col_s = (cam_resolution[FRAMESIZE_VGA].width - w) / 2;
     (void)row_s;
     (void)col_s;
 
@@ -219,8 +219,8 @@ static int set_framesize(sensor_t *sensor, framesize_t framesize)
         if ((win_w * cfg->ratio_numerator / cfg->ratio_denominator >= w) && (win_h * cfg->ratio_numerator / cfg->ratio_denominator >= h)) {
             win_w = w * cfg->ratio_denominator / cfg->ratio_numerator;
             win_h = h * cfg->ratio_denominator / cfg->ratio_numerator;
-            row_s = (resolution[FRAMESIZE_VGA].height - win_h) / 2;
-            col_s = (resolution[FRAMESIZE_VGA].width - win_w) / 2;
+            row_s = (cam_resolution[FRAMESIZE_VGA].height - win_h) / 2;
+            col_s = (cam_resolution[FRAMESIZE_VGA].width - win_w) / 2;
             ESP_LOGI(TAG, "subsample win:%dx%d, ratio:%f", win_w, win_h, (float)cfg->ratio_numerator / (float)cfg->ratio_denominator);
             break;
         }

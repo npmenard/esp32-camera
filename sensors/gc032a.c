@@ -187,10 +187,10 @@ static int set_framesize(sensor_t *sensor, framesize_t framesize)
         framesize = FRAMESIZE_VGA;
     }
     sensor->status.framesize = framesize;
-    uint16_t w = resolution[framesize].width;
-    uint16_t h = resolution[framesize].height;
-    uint16_t row_s = (resolution[FRAMESIZE_VGA].height - h) / 2;
-    uint16_t col_s = (resolution[FRAMESIZE_VGA].width - w) / 2;
+    uint16_t w = cam_resolution[framesize].width;
+    uint16_t h = cam_resolution[framesize].height;
+    uint16_t row_s = (cam_resolution[FRAMESIZE_VGA].height - h) / 2;
+    uint16_t col_s = (cam_resolution[FRAMESIZE_VGA].width - w) / 2;
 
     write_reg(sensor->slv_addr, 0xfe, 0x00);
     write_reg(sensor->slv_addr, P0_ROW_START_HIGH, H8(row_s)); // Row_start[8]

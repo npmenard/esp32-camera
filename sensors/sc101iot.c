@@ -1,6 +1,6 @@
 /*
  * SC101IOT driver.
- * 
+ *
  * Copyright 2020-2022 Espressif Systems (Shanghai) PTE LTD
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
 
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -70,7 +70,7 @@ static int set_reg(sensor_t *sensor, int reg, int mask, int value)
     if(SCCB_Write(sensor->slv_addr, 0xf0, reg_high)) {
         return -1;
     }
-    
+
     ret = SCCB_Write(sensor->slv_addr, reg_low, value & 0xFF);
     return ret;
 }
@@ -162,7 +162,7 @@ static int set_agc_gain(sensor_t *sensor, int gain)
     WRITE_REG_OR_RETURN(0x0069, (gain >> 8) & 0xFF); // Window weight setting2
     WRITE_REG_OR_RETURN(0x006a, (gain >> 16) & 0xFF); // Window weight setting3
     WRITE_REG_OR_RETURN(0x006b, (gain >> 24) & 0xFF); // Window weight setting4
-    
+
     return ret;
 }
 
@@ -204,7 +204,7 @@ static int set_contrast(sensor_t *sensor, int level)
 static int reset(sensor_t *sensor)
 {
     int ret = set_regs(sensor, sc101iot_default_init_regs, sizeof(sc101iot_default_init_regs)/(sizeof(uint8_t) * 2));
-    
+
     // Delay
     vTaskDelay(50 / portTICK_PERIOD_MS);
 
@@ -236,19 +236,19 @@ static int set_window(sensor_t *sensor, int offset_x, int offset_y, int w, int h
 
 static int set_framesize(sensor_t *sensor, framesize_t framesize)
 {
-    uint16_t w = resolution[framesize].width;
-    uint16_t h = resolution[framesize].height;
+    uint16_t w = cam_resolution[framesize].width;
+    uint16_t h = cam_resolution[framesize].height;
     if(w>SC101_MAX_FRAME_WIDTH || h > SC101_MAX_FRAME_HIGH) {
-        goto err; 
+        goto err;
     }
 
-    uint16_t offset_x = (SC101_MAX_FRAME_WIDTH-w) /2;   
+    uint16_t offset_x = (SC101_MAX_FRAME_WIDTH-w) /2;
     uint16_t offset_y = (SC101_MAX_FRAME_HIGH-h) /2;
-    
+
     if(set_window(sensor, offset_x, offset_y, w, h)) {
-        goto err; 
+        goto err;
     }
-    
+
     sensor->status.framesize = framesize;
     return 0;
 err:
@@ -335,7 +335,7 @@ int sc101iot_init(sensor_t *sensor)
     sensor->get_reg = get_reg;
     sensor->set_reg = set_reg;
     sensor->set_xclk = set_xclk;
-    
+
     ESP_LOGD(TAG, "sc101iot Attached");
 
     return 0;

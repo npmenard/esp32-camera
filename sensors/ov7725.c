@@ -225,8 +225,8 @@ static int set_framesize(sensor_t *sensor, framesize_t framesize)
     if (framesize > FRAMESIZE_VGA) {
         return -1;
     }
-    uint16_t w = resolution[framesize].width;
-    uint16_t h = resolution[framesize].height;
+    uint16_t w = cam_resolution[framesize].width;
+    uint16_t h = cam_resolution[framesize].height;
     uint8_t reg = SCCB_Read(sensor->slv_addr, COM7);
 
     sensor->status.framesize = framesize;
@@ -562,13 +562,13 @@ int ov7725_init(sensor_t *sensor)
     sensor->set_res_raw = set_res_raw;
     sensor->set_pll = _set_pll;
     sensor->set_xclk = set_xclk;
-    
+
     // Retrieve sensor's signature
     sensor->id.MIDH = SCCB_Read(sensor->slv_addr, REG_MIDH);
     sensor->id.MIDL = SCCB_Read(sensor->slv_addr, REG_MIDL);
     sensor->id.PID = SCCB_Read(sensor->slv_addr, REG_PID);
     sensor->id.VER = SCCB_Read(sensor->slv_addr, REG_VER);
-    
+
     ESP_LOGD(TAG, "OV7725 Attached");
 
     return 0;
